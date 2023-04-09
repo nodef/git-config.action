@@ -1,8 +1,8 @@
-const os   = require('os');
-const fs   = require('fs');
-const cp   = require('child_process');
-const core = require('@actions/core');
-const {dirname, join} = require('path');
+import * as os   from "os";
+import * as fs   from "fs";
+import * as cp   from "child_process";
+import * as core from "@actions/core";
+import {dirname, join} from "path";
 
 
 // Globals.
@@ -10,25 +10,25 @@ const E = process.env;
 
 
 // Read a file and normalize line endings to LF.
-function readFile(pth) {
+function readFile(pth: string): string {
   var d = fs.readFileSync(pth, 'utf8');
   return d.replace(/\r\n?/g, '\n');
 }
 // Write a file and normalize line endings to the current OS.
-function writeFile(pth, d) {
+function writeFile(pth: string, d: string): void {
   d = d.replace(/\r\n?|\n/g, os.EOL);
   fs.writeFileSync(pth, d);
 }
 
 
 // Check if an array has a regex match.
-function hasRegex(x, re) {
-  for (var v of x)
-    if (re.test(v)) return true;
+function hasRegex(xs: string[], re: RegExp): boolean {
+  for (var x of xs)
+    if (re.test(x)) return true;
   return false;
 }
 // Populate credentials for GitHub from environment variables.
-function populateDefaultCredentials(xs) {
+function populateDefaultCredentials(xs: string[]): string[] {
   if (!hasRegex(xs, /^(auto|default)$/i)) return xs;
   xs  = xs.filter(r => !/^auto$/i.test(r));
   const GITHUB_TOKEN = E.GH_TOKEN || E.GITHUB_TOKEN || '';
@@ -40,7 +40,7 @@ function populateDefaultCredentials(xs) {
 
 
 // Fix a credential string.
-function fixCredential(x) {
+function fixCredential(x: string): string {
   var rc = /[:=](\w+)\s*$/;
   var rk = /^((?:\w+:)?\/\/)?(\w+:\w*@)?([\s\S]+?)\/?$/;
   var k  = x.replace(rc, ''  ).trim();
@@ -52,7 +52,7 @@ function fixCredential(x) {
   });
 }
 // Fix an entry (config) string.
-function fixEntry(x) {
+function fixEntry(x: string): string {
   var i = x.lastIndexOf('=');
   var k = x.substring(0, i).trim();
   var v = x.substring(i+1) .trim().replace(/[\'\"]([\s\S]+?)[\'\"]/, '$1');
@@ -61,7 +61,7 @@ function fixEntry(x) {
 
 
 // Main function.
-function main() {
+function main(): void {
   const HOME = E.HOME || E.HOMEPATH || E.USERPROFILE;
   const PATH = E.GIT_CONFIG_GLOBAL  || `${HOME}/.gitconfig`;
   var   path = core.getInput('path') || PATH;
