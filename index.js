@@ -55,7 +55,7 @@ function fixCredential(x) {
 function fixEntry(x) {
   var i = x.lastIndexOf('=');
   var k = x.substring(0, i).trim();
-  var v = x.substring(i+1) .trim();
+  var v = x.substring(i+1) .trim().replace(/[\'\"]([\s\S]+?)[\'\"]/, '$1');
   return `${k} "${v}"`;
 }
 

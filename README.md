@@ -1,5 +1,51 @@
 A GitHub Action for configuring git.
 
+```yaml
+# Configure credentials for GitHub and GitHub Gist.
+- uses: nodef/git-config.action@v0.3.0
+  with:
+    credentials: |-
+      github.com=${{secrets.GITHUB_TOKEN}}
+      gist.github.com=${{secrets.GITHUB_TOKEN}}
+
+
+# Automatically configure credentials using environment variables.
+# Needs $GH_TOKEN/$GITHUB_TOKEN to be set.
+- uses: nodef/git-config.action@v0.3.0
+  with:
+    credentials: auto
+
+
+# Set user name and email.
+- uses: nodef/git-config.action@v0.3.0
+  with:
+    credentials: auto
+    entries: |-
+      user.name  = Your Name
+      user.email = your-email@example.com
+```
+
+<br>
+
+
+#### Options
+
+```yaml
+- uses: nodef/git-config.action@v0.3.0
+  with:
+    path: $HOME/.gitconfig  # Path to the .gitconfig file
+    credentials-path: $HOME/.git-credentials  # Path to the .git-credentials file
+    reset: false            # Reset the .gitconfig and .git-credentials files
+    credentials: |-         # Credentials to configure
+      myhost1=authtoken1
+      mhhost2=authtoken2
+      ...
+    entries: |-             # Entries to add
+      key1=value1
+      key2=value2
+      ...
+```
+
 <br>
 <br>
 
