@@ -1,0 +1,30 @@
+name: 'Configure git'
+description: 'Configure git by updating .gitconfig and .git-credentials files.'
+branding:
+  color: red
+  icon: settings
+
+runs:
+  using: 'node18'
+  main:  'index.js'
+inputs:
+  path:
+    description: 'Path of .gitconfig file'
+    required: false
+    default:  ''
+  credentials-path:
+    description: 'Path of .git-credentials file'
+    required: false
+    default:  ''
+  reset:
+    description: 'Reset .gitconfig, .git-credentials files?'
+    required: false
+    default:  false
+  credentials:
+    description: 'List of hosts and associated auth-tokens (newline separated)'
+    required: false
+    default:  ''
+  entries:
+    description: 'List of entries to add to .gitconfig file (newline separated)'
+    required: false
+    default:  ''

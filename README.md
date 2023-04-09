@@ -35,7 +35,7 @@ A GitHub Action for configuring git.
   with:
     path: $HOME/.gitconfig  # Path to the .gitconfig file
     credentials-path: $HOME/.git-credentials  # Path to the .git-credentials file
-    reset: false            # Reset the .gitconfig and .git-credentials files
+    reset: false            # Reset the .gitconfig, .git-credentials files
     credentials: |-         # Credentials to configure
       myhost1=authtoken1
       mhhost2=authtoken2
