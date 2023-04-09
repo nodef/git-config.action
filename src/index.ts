@@ -66,7 +66,7 @@ function main(): void {
   const PATH = E.GIT_CONFIG_GLOBAL  || `${HOME}/.gitconfig`;
   var   path = core.getInput('path') || PATH;
   var  reset = core.getBooleanInput('reset')  || false;
-  var credentialsPath = core.getInput('credentials-path') || join(dirname(PATH), '.gitcredentials');
+  var credentialsPath = core.getInput('credentials-path') || join(dirname(PATH), '.git-credentials');
   var credentials     = core.getMultilineInput('credentials') || [];
   var entries         = core.getMultilineInput('entries')     || [];
   var gitcredentials  = reset? '' : readFile(credentialsPath);

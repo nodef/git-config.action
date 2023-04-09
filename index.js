@@ -1623,8 +1623,8 @@ function requireOidcUtils () {
 	            const res = yield httpclient
 	                .getJson(id_token_url)
 	                .catch(error => {
-	                throw new Error(`Failed to get ID Token. \n
-        Error Code : ${error.statusCode}\n
+	                throw new Error(`Failed to get ID Token. \n 
+        Error Code : ${error.statusCode}\n 
         Error Message: ${error.result.message}`);
 	            });
 	            const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
@@ -2108,7 +2108,7 @@ function main() {
     const PATH = E.GIT_CONFIG_GLOBAL || `${HOME}/.gitconfig`;
     var path = coreExports.getInput('path') || PATH;
     var reset = coreExports.getBooleanInput('reset') || false;
-    var credentialsPath = coreExports.getInput('credentials-path') || require$$0$1.join(require$$0$1.dirname(PATH), '.gitcredentials');
+    var credentialsPath = coreExports.getInput('credentials-path') || require$$0$1.join(require$$0$1.dirname(PATH), '.git-credentials');
     var credentials = coreExports.getMultilineInput('credentials') || [];
     var entries = coreExports.getMultilineInput('entries') || [];
     var gitcredentials = reset ? '' : readFile(credentialsPath);
