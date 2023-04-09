@@ -2089,14 +2089,8 @@ function populateDefaultCredentials(xs) {
     return xs;
 }
 function populateDefaultEntries(xs, credentials) {
-    const USER_NAME = E.GIT_AUTHOR_NAME || E.GIT_COMMITTER_NAME || "";
-    const USER_EMAIL = E.GIT_AUTHOR_EMAIL || E.GIT_COMMITTER_EMAIL || E.EMAIL || "";
     if (!hasRegex(xs, /credential\.helper/i) && credentials.length > 0)
         xs.push("credential.helper = store");
-    if (!hasRegex(xs, /user\.name/i) && USER_NAME)
-        xs.push(`user.name  = ${USER_NAME}`);
-    if (!hasRegex(xs, /user\.email/i) && USER_EMAIL)
-        xs.push(`user.email = ${USER_EMAIL}`);
     return xs;
 }
 function fixCredential(x) {

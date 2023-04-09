@@ -40,11 +40,11 @@ function populateDefaultCredentials(xs: string[]): string[] {
 }
 // Populate entries for GitHub from environment variables.
 function populateDefaultEntries(xs: string[], credentials: string[]): string[] {
-  const USER_NAME  = E.GIT_AUTHOR_NAME  || E.GIT_COMMITTER_NAME  || "";
-  const USER_EMAIL = E.GIT_AUTHOR_EMAIL || E.GIT_COMMITTER_EMAIL || E.EMAIL || "";
+  // const USER_NAME  = E.GIT_AUTHOR_NAME  || E.GIT_COMMITTER_NAME  || E.NAME  || E.USER || "";
+  // const USER_EMAIL = E.GIT_AUTHOR_EMAIL || E.GIT_COMMITTER_EMAIL || E.EMAIL || "";
   if (!hasRegex(xs, /credential\.helper/i) && credentials.length>0) xs.push("credential.helper = store");
-  if (!hasRegex(xs, /user\.name/i)  && USER_NAME)  xs.push(`user.name  = ${USER_NAME}`);
-  if (!hasRegex(xs, /user\.email/i) && USER_EMAIL) xs.push(`user.email = ${USER_EMAIL}`);
+  // if (!hasRegex(xs, /user\.name/i)  && USER_NAME)  xs.push(`user.name  = ${USER_NAME}`);
+  // if (!hasRegex(xs, /user\.email/i) && USER_EMAIL) xs.push(`user.email = ${USER_EMAIL}`);
   return xs;
 }
 

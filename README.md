@@ -24,9 +24,8 @@ A GitHub Action for configuring git.
 
 
 # Automatically configure credentials, user name, and email.
-# Needs the following to be set:
-# - $GH_TOKEN / $GITHUB_TOKEN
-# - $GIT_AUTHOR_NAME  / $GIT_COMMITTER_NAME
+# Needs the following to be set as well:
+# - $GIT_AUTHOR_NAME  / $GIT_COMMITTER_NAME  / $NAME / $USER
 # - $GIT_AUTHOR_EMAIL / $GIT_COMMITTER_EMAIL / $EMAIL
 - uses: nodef/git-config.action@v0.6.0
 ```
