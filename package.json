@@ -1,6 +1,6 @@
 {
   "name": "git-config.action",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A GitHub Action for configuring git.",
   "private": true,
   "main": "index.js",

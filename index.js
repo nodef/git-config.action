@@ -2062,8 +2062,10 @@ var coreExports = requireCore();
 
 const E = process.env;
 function readFile(pth) {
-    var d = fs__namespace.readFileSync(pth, 'utf8');
-    return d.replace(/\r\n?/g, '\n');
+    if (!fs__namespace.existsSync(pth))
+        return "";
+    var d = fs__namespace.readFileSync(pth, "utf8");
+    return d.replace(/\r\n?/g, "\n");
 }
 function writeFile(pth, d) {
     d = d.replace(/\r\n?|\n/g, require$$0__namespace.EOL);
@@ -2079,7 +2081,7 @@ function populateDefaultCredentials(xs) {
     if (!hasRegex(xs, /^(auto|default)$/i))
         return xs;
     xs = xs.filter(r => !/^auto$/i.test(r));
-    const GITHUB_TOKEN = E.GH_TOKEN || E.GITHUB_TOKEN || '';
+    const GITHUB_TOKEN = E.GH_TOKEN || E.GITHUB_TOKEN || "";
     if (!GITHUB_TOKEN)
         return xs;
     xs.push(`https://${GITHUB_TOKEN}:@gist.github.com`);
@@ -2089,35 +2091,35 @@ function populateDefaultCredentials(xs) {
 function fixCredential(x) {
     var rc = /[:=](\w+)\s*$/;
     var rk = /^((?:\w+:)?\/\/)?(\w+:\w*@)?([\s\S]+?)\/?$/;
-    var k = x.replace(rc, '').trim();
-    var v = x.replace(rc, '$1').trim();
+    var k = x.replace(rc, "").trim();
+    var v = x.replace(rc, "$1").trim();
     return k.replace(rk, (_, p1, p2, p3) => {
-        p1 = !p1 || p1 === '//' ? 'https://' : p1;
+        p1 = !p1 || p1 === "//" ? "https://" : p1;
         p2 = !p2 && v ? `${v}:@` : p2;
         return `${p1}${p2}${p3}`;
     });
 }
 function fixEntry(x) {
-    var i = x.lastIndexOf('=');
+    var i = x.lastIndexOf("=");
     var k = x.substring(0, i).trim();
-    var v = x.substring(i + 1).trim().replace(/[\'\"]([\s\S]+?)[\'\"]/, '$1');
+    var v = x.substring(i + 1).trim().replace(/[\'\"]([\s\S]+?)[\'\"]/, "$1");
     return `${k} "${v}"`;
 }
 function main() {
     const HOME = E.HOME || E.HOMEPATH || E.USERPROFILE;
     const PATH = E.GIT_CONFIG_GLOBAL || `${HOME}/.gitconfig`;
-    var path = coreExports.getInput('path') || PATH;
-    var reset = coreExports.getBooleanInput('reset') || false;
-    var credentialsPath = coreExports.getInput('credentials-path') || require$$0$1.join(require$$0$1.dirname(PATH), '.git-credentials');
-    var credentials = coreExports.getMultilineInput('credentials') || [];
-    var entries = coreExports.getMultilineInput('entries') || [];
-    var gitcredentials = reset ? '' : readFile(credentialsPath);
+    var path = coreExports.getInput("path") || PATH;
+    var reset = coreExports.getBooleanInput("reset") || false;
+    var credentialsPath = coreExports.getInput("credentials-path") || require$$0$1.join(require$$0$1.dirname(PATH), ".git-credentials");
+    var credentials = coreExports.getMultilineInput("credentials") || [];
+    var entries = coreExports.getMultilineInput("entries") || [];
+    var gitcredentials = reset ? "" : readFile(credentialsPath);
     credentials = populateDefaultCredentials(credentials);
     for (let c of credentials)
-        gitcredentials += fixCredential(c) + '\n';
+        gitcredentials += fixCredential(c) + "\n";
     writeFile(credentialsPath, gitcredentials);
     if (reset)
-        writeFile(path, '');
+        writeFile(path, "");
     for (let e of entries)
         cp__namespace.execSync(`git config --file "${path}" ${fixEntry(e)}`);
 }
