@@ -30,12 +30,21 @@ function hasRegex(xs: string[], re: RegExp): boolean {
 }
 // Populate credentials for GitHub from environment variables.
 function populateDefaultCredentials(xs: string[]): string[] {
-  if (!hasRegex(xs, /^(auto|default)$/i)) return xs;
+  if (xs.length>0 && !hasRegex(xs, /^(auto|default)$/i)) return xs;
   xs  = xs.filter(r => !/^auto$/i.test(r));
   const GITHUB_TOKEN = E.GH_TOKEN || E.GITHUB_TOKEN || "";
   if  (!GITHUB_TOKEN) return xs;
   xs.push(`https://${GITHUB_TOKEN}:@gist.github.com`);
   xs.push(`https://${GITHUB_TOKEN}:@github.com`);
+  return xs;
+}
+// Populate entries for GitHub from environment variables.
+function populateDefaultEntries(xs: string[], credentials: string[]): string[] {
+  const USER_NAME  = E.GIT_AUTHOR_NAME  || E.GIT_COMMITTER_NAME  || "";
+  const USER_EMAIL = E.GIT_AUTHOR_EMAIL || E.GIT_COMMITTER_EMAIL || E.EMAIL || "";
+  if (!hasRegex(xs, /credential\.helper/i) && credentials.length>0) xs.push("credential.helper = store");
+  if (!hasRegex(xs, /user\.name/i)  && USER_NAME)  xs.push(`user.name  = ${USER_NAME}`);
+  if (!hasRegex(xs, /user\.email/i) && USER_EMAIL) xs.push(`user.email = ${USER_EMAIL}`);
   return xs;
 }
 
@@ -72,6 +81,7 @@ function main(): void {
   var entries         = core.getMultilineInput("entries")     || [];
   var gitcredentials  = reset? "" : readFile(credentialsPath);
   credentials = populateDefaultCredentials(credentials);
+  entries     = populateDefaultEntries(entries, credentials);
   for (let c of credentials)
     gitcredentials += fixCredential(c) + "\n";
   writeFile(credentialsPath, gitcredentials);
