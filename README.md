@@ -72,3 +72,4 @@ A GitHub Action for configuring git.
 - [Git: Easiest way to reset git config file](https://stackoverflow.com/q/35853986/1413259)
 - [How can I save username and password in Git?](https://stackoverflow.com/a/35942890/1413259)
 - [How to use array input for a custom GitHub Actions](https://stackoverflow.com/a/75420778/1413259)
+![](https://ga-beacon.deno.dev/G-RC63DPBH3P:SH3Eq-NoQ9mwgYeHWxu7cw/github.com/nodef/git-config.action)
